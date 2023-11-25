@@ -39,11 +39,17 @@
         <span>Contact List</span></a>
 </li>
 
+<li class="nav-item">
+    <a class="nav-link" href="sender_account.php">
+        <i class="fas fa-fw fa-table"></i>
+        <span>Sender Account List</span></a>
+</li>
+
 
 <li class="nav-item">
-    <a class="nav-link" href="charts.html">
+    <a class="nav-link" href="message.php">
         <i class="fas fa-fw fa-chart-area"></i>
-        <span>Send Message</span></a>
+        <span>Send Message All</span></a>
 </li>
 
 
