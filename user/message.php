@@ -73,7 +73,7 @@ require_once "header.php";
                 <br>
 
                 <!-- Contact Form -->
-                <form id="userForm" action="../function/sending_maill.php" method="POST">
+                <form id="userForm" action="../function/sending_mail.php" method="POST">
 
                     <div class="form-group">
                         <label for="target">Target:</label>

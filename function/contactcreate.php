@@ -24,8 +24,8 @@ if (isset($_POST["create_now"])) {
         $failMessage = isset($_SESSION["fail_message"]) ? $_SESSION["fail_message"] : "";
 
         // Unset session variables
-        unset($_SESSION["success_message"]);
-        unset($_SESSION["fail_message"]);
+        // unset($_SESSION["success_message"]);
+        // unset($_SESSION["fail_message"]);
 
         // Redirect to the original page with messages as parameters
         // header("Location: ".$_SERVER['HTTP_REFERER']."?success_message=$successMessage&fail_message=$failMessage");
