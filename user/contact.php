@@ -60,41 +60,61 @@ require_once "header.php";
                     <input type="submit" class="btn btn-primary" name="create_now" value="Submit">
                 </form>
                 <br>
+                <!-- DataTales Example -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3 d-flex justify-content-between align-items-center">
+                        <h6 class="m-0 font-weight-bold text-primary">Contact List Table</h6>
+                        <a href="../function/contactexportlist.php" class="btn btn-primary">Export</a>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tfoot>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Email</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </tfoot>
+                                <tbody>
+                                    <?php
+                                    if (isset($_SESSION['user_id'])) {
+                                        $user_id = $_SESSION['user_id'];
+
+                                        // Fetch data from database
+                                        $query = "SELECT id, email FROM contact_group WHERE user_id = ? Order By id Desc";
+                                        $stmt = $conn->prepare($query);
+                                        $stmt->bind_param("i", $user_id);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+                                        $number = 0;
+                                        // Loop through the results and display them in the tbody
+                                        while ($row = $result->fetch_assoc()) {
+                                            echo "<tr>";
+                                            echo "<td>" . ++$number . "</td>";
+                                            echo "<td>" . $row['email'] . "</td>";
+                                            echo "<td><button class='btn btn-sm btn-danger'>Delete</button></td>"; // Customize as needed
+                                            echo "</tr>";
+                                        }
+                                    }
+                                    ?>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <hr> <br>
                 <!-- Contact List -->
-                <table id="userTable" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Email</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-            <?php 
-                if (isset($_SESSION['user_id'])) {
-                    $user_id = $_SESSION['user_id'];
 
-                    // Fetch data from database
-                    $query = "SELECT id, email FROM contact_group WHERE user_id = ?";
-                    $stmt = $conn->prepare($query);
-                    $stmt->bind_param("i", $user_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
-                    $number = 0;
-                    // Loop through the results and display them in the tbody
-                    while ($row = $result->fetch_assoc()) {
-                        echo "<tr>";
-                        echo "<td>" . ++$number . "</td>";
-                        echo "<td>" . $row['email'] . "</td>";
-                        echo "<td><button class='btn btn-sm btn-danger'>Delete</button></td>"; // Customize as needed
-                        echo "</tr>";
-                    }
-                }
-            ?>
-</tbody>
-
-                </table>
             </div>
             <!-- /.container-fluid -->
 
@@ -114,10 +134,26 @@ require_once "header.php";
 <!-- End of Page Wrapper -->
 
 <script>
-        $(document).ready(function () {
-            $('#userTable').DataTable();
+    $(document).ready(function() {
+        $('#userTable').DataTable();
+
+        $("#userexportlist").click(function() {
+            alert(1);
+            $.ajax({
+                type: "POST",
+                url: "../function/contactexportlist.php",
+                dataType: 'json',
+                success: function(response) {
+                    alert(response);
+                },
+                error: function() {
+                    alert("Failed to export data. Please try again.");
+                }
+            });
         });
-    </script>
+
+    });
+</script>
 
 
 <?php
